@@ -7,9 +7,7 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v1
       - name: npm install and build webpack
@@ -20,22 +18,12 @@ jobs:
   test:
     needs: build
     runs-on: ubuntu-latest
-
-    strategy:
-    - uses: actions/download-artifact@master
-      with:
-        name: webpack artifacts
-        path: public
-    - name: npm install, and test
-        os: [ubuntu-lastest, windows-2016]
-        node-version: [8.x, 10.x]
-
     steps:
+    - uses: actions/checkout@v1
     - uses: actions/download-artifact@master
       with: 
         name: webpack artifacts
         path: public
-    - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
